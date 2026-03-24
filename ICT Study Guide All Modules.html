@@ -1,0 +1,1043 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ICT Study Guide – Modules 1, 2 & 3</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=DM+Sans:wght@300;400;500;600&display=swap');
+
+  :root[data-theme="dark"] {
+    --bg: #0d1117; --bg2: #161b22; --card: #1c2333; --card-hover: #212840;
+    --border: rgba(255,255,255,0.07); --text: #e6edf3; --text-muted: #8b949e;
+    --text-sub: #c9d1d9; --gold: #f0c060; --gold-dim: rgba(240,192,96,0.15);
+    --teal: #39d2a6; --teal-dim: rgba(57,210,166,0.15); --red: #f85149;
+    --red-dim: rgba(248,81,73,0.15); --purple: #bc8cff; --purple-dim: rgba(188,140,255,0.15);
+    --blue: #58a6ff; --blue-dim: rgba(88,166,255,0.15);
+    --header-bg: #090d14; --section-border: #f0c060;
+    --highlight-bg: rgba(240,192,96,0.18); --table-head: #212840;
+    --table-even: rgba(255,255,255,0.03); --scrollbar: #30363d;
+  }
+  :root[data-theme="light"] {
+    --bg: #f0f4ff; --bg2: #e8edf8; --card: #ffffff; --card-hover: #f0f4ff;
+    --border: rgba(15,29,59,0.08); --text: #0f1d3b; --text-muted: #6b7a99;
+    --text-sub: #2b3a5a; --gold: #b8860a; --gold-dim: rgba(200,150,10,0.12);
+    --teal: #1a7f6e; --teal-dim: #e8f4f1; --red: #c0392b; --red-dim: #fde8e8;
+    --purple: #5a3ea0; --purple-dim: #eee8ff; --blue: #1a56a0; --blue-dim: #deeeff;
+    --header-bg: #0f1d3b; --section-border: #e8b84b;
+    --highlight-bg: #fff3c2; --table-head: #0f1d3b;
+    --table-even: #f9f7f4; --scrollbar: #ccc;
+  }
+
+  * { margin:0; padding:0; box-sizing:border-box; }
+  ::-webkit-scrollbar { width:6px; }
+  ::-webkit-scrollbar-thumb { background:var(--scrollbar); border-radius:3px; }
+
+  body {
+    background:var(--bg); font-family:'DM Sans',sans-serif;
+    color:var(--text); min-height:100vh; transition:background 0.4s,color 0.4s;
+  }
+
+  /* PARTICLES */
+  #particles { position:fixed; inset:0; pointer-events:none; z-index:0; overflow:hidden; }
+  .particle {
+    position:absolute; border-radius:50%; opacity:0;
+    animation:floatUp linear infinite;
+  }
+  @keyframes floatUp {
+    0%   { transform:translateY(100vh) scale(0); opacity:0; }
+    10%  { opacity:0.35; }
+    90%  { opacity:0.12; }
+    100% { transform:translateY(-10vh) scale(1); opacity:0; }
+  }
+
+  /* HEADER */
+  header {
+    background:var(--header-bg); padding:2.5rem 2rem 0;
+    text-align:center; position:relative; overflow:hidden; z-index:1;
+  }
+  .header-glow {
+    position:absolute; top:-80px; left:50%; transform:translateX(-50%);
+    width:500px; height:220px;
+    background:radial-gradient(ellipse,rgba(88,166,255,0.2) 0%,transparent 70%);
+    animation:pulseGlow 4s ease-in-out infinite;
+  }
+  @keyframes pulseGlow {
+    0%,100%{opacity:0.5;transform:translateX(-50%) scale(1);}
+    50%{opacity:1;transform:translateX(-50%) scale(1.15);}
+  }
+  .badge-row {
+    display:flex; justify-content:center; gap:0.5rem; margin-bottom:0.8rem;
+    flex-wrap:wrap; position:relative;
+    animation:slideDown 0.6s ease both;
+  }
+  .badge {
+    font-size:0.7rem; font-weight:700; letter-spacing:0.08em;
+    text-transform:uppercase; padding:0.25rem 0.7rem;
+    border-radius:20px; border:1px solid;
+  }
+  .badge-m1 { background:rgba(88,166,255,0.15); color:var(--blue); border-color:var(--blue); }
+  .badge-m2 { background:rgba(240,192,96,0.15); color:var(--gold); border-color:var(--gold); }
+  .badge-m3 { background:rgba(57,210,166,0.15); color:var(--teal); border-color:var(--teal); }
+
+  header h1 {
+    font-family:'Playfair Display',serif;
+    font-size:clamp(1.5rem,4vw,2.4rem); color:#fff;
+    letter-spacing:0.02em; position:relative;
+    animation:slideDown 0.7s 0.05s cubic-bezier(0.22,1,0.36,1) both;
+  }
+  header p {
+    color:var(--blue); font-size:0.88rem; margin-top:0.4rem;
+    font-weight:500; letter-spacing:0.1em; text-transform:uppercase;
+    position:relative;
+    animation:slideDown 0.7s 0.1s cubic-bezier(0.22,1,0.36,1) both;
+  }
+  @keyframes slideDown {
+    from{opacity:0;transform:translateY(-18px);}
+    to{opacity:1;transform:translateY(0);}
+  }
+
+  .theme-toggle {
+    position:absolute; top:1rem; right:1rem;
+    background:var(--blue-dim); border:1px solid var(--blue);
+    color:var(--blue); padding:0.35rem 0.75rem; border-radius:20px;
+    cursor:pointer; font-size:0.75rem; font-weight:700;
+    letter-spacing:0.05em; transition:all 0.2s; z-index:10;
+  }
+  .theme-toggle:hover { background:var(--blue); color:#fff; }
+
+  /* TABS */
+  .tabs {
+    display:flex; max-width:900px; margin:2rem auto 0;
+    padding:0 1rem; border-bottom:1px solid var(--border);
+    position:relative; overflow-x:auto;
+  }
+  .tab-btn {
+    flex:1; min-width:80px; padding:0.8rem 0.6rem;
+    background:transparent; color:var(--text-muted); border:none;
+    cursor:pointer; font-family:'DM Sans',sans-serif; font-size:0.82rem;
+    font-weight:600; letter-spacing:0.04em; text-transform:uppercase;
+    transition:color 0.2s; border-bottom:3px solid transparent;
+    position:relative; bottom:-1px; white-space:nowrap;
+  }
+  .tab-btn.active { color:var(--gold); border-bottom-color:var(--gold); }
+  .tab-btn:hover:not(.active) { color:var(--text); }
+
+  main {
+    max-width:900px; margin:0 auto;
+    padding:2rem 1rem 5rem; position:relative; z-index:1;
+  }
+
+  .tab-content { display:none; }
+  .tab-content.active { display:block; }
+
+  /* SECTION LABELS */
+  .section-label {
+    font-family:'Playfair Display',serif; font-size:1.15rem;
+    color:var(--text); margin:2.2rem 0 0.9rem;
+    padding:0.55rem 1rem; border-left:4px solid var(--section-border);
+    border-radius:0 10px 10px 0; animation:fadeInLeft 0.5s ease both;
+    display:flex; align-items:center; gap:0.6rem;
+  }
+  .section-label.m1 { background:var(--blue-dim); border-color:var(--blue); }
+  .section-label.m2 { background:var(--gold-dim); border-color:var(--gold); }
+  .section-label.m3 { background:var(--teal-dim); border-color:var(--teal); }
+  .section-label .lnum {
+    font-size:0.68rem; font-weight:800; letter-spacing:0.1em;
+    padding:0.2rem 0.5rem; border-radius:12px;
+  }
+  .m1 .lnum { background:var(--blue-dim); color:var(--blue); }
+  .m2 .lnum { background:var(--gold-dim); color:var(--gold); }
+  .m3 .lnum { background:var(--teal-dim); color:var(--teal); }
+
+  @keyframes fadeInLeft {
+    from{opacity:0;transform:translateX(-14px);}
+    to{opacity:1;transform:translateX(0);}
+  }
+
+  /* CARDS */
+  .card {
+    background:var(--card); border-radius:14px;
+    box-shadow:0 2px 16px rgba(0,0,0,0.25);
+    margin-bottom:0.85rem; overflow:hidden;
+    border:1px solid var(--border);
+    transition:transform 0.2s,box-shadow 0.2s,border-color 0.2s;
+    animation:cardIn 0.4s ease both;
+  }
+  @keyframes cardIn {
+    from{opacity:0;transform:translateY(12px);}
+    to{opacity:1;transform:translateY(0);}
+  }
+  .card:hover { transform:translateY(-2px); box-shadow:0 6px 28px rgba(0,0,0,0.35); border-color:rgba(240,192,96,0.25); }
+
+  .card-header {
+    display:flex; align-items:center; justify-content:space-between;
+    padding:1rem 1.2rem; cursor:pointer; user-select:none;
+    transition:background 0.15s; gap:0.8rem; position:relative; overflow:hidden;
+  }
+  .card-header:hover { background:var(--card-hover); }
+  .card-title { font-weight:600; font-size:0.95rem; color:var(--text); flex:1; }
+
+  .tag {
+    font-size:0.67rem; font-weight:700; letter-spacing:0.07em;
+    text-transform:uppercase; padding:0.22rem 0.6rem;
+    border-radius:20px; white-space:nowrap;
+  }
+  .tag-def     { background:var(--teal-dim);   color:var(--teal); }
+  .tag-example { background:var(--gold-dim);   color:var(--gold); }
+  .tag-types   { background:var(--purple-dim); color:var(--purple); }
+  .tag-key     { background:var(--red-dim);    color:var(--red); }
+  .tag-hist    { background:var(--blue-dim);   color:var(--blue); }
+
+  .chevron {
+    font-size:0.88rem; color:var(--text-muted);
+    transition:transform 0.3s cubic-bezier(0.22,1,0.36,1); flex-shrink:0;
+  }
+  .card.open .chevron { transform:rotate(180deg); }
+
+  .card-body {
+    display:none; padding:0.2rem 1.2rem 1.2rem;
+    border-top:1px solid var(--border);
+    animation:expandIn 0.25s ease both;
+  }
+  @keyframes expandIn {
+    from{opacity:0;transform:translateY(-6px);}
+    to{opacity:1;transform:translateY(0);}
+  }
+  .card.open .card-body { display:block; }
+  .card-body p, .card-body li { font-size:0.91rem; line-height:1.78; color:var(--text-sub); }
+  .card-body ul,
+  .card-body ol { padding-left:1.3rem; margin-top:0.5rem; }
+  .card-body li { margin-bottom:0.35rem; }
+  .card-body p { margin-top:0.5rem; }
+
+  .highlight {
+    background:var(--highlight-bg); padding:0.1em 0.35em;
+    border-radius:4px; font-weight:600; color:var(--text);
+  }
+
+  /* TABLES */
+  .compare-table {
+    width:100%; border-collapse:collapse; margin-top:0.9rem;
+    font-size:0.85rem; border-radius:8px; overflow:hidden;
+  }
+  .compare-table th {
+    background:var(--table-head); color:#fff;
+    padding:0.55rem 0.8rem; text-align:left; font-weight:600;
+  }
+  .compare-table td {
+    padding:0.45rem 0.8rem; border-bottom:1px solid var(--border);
+    vertical-align:top; color:var(--text-sub);
+  }
+  .compare-table tr:nth-child(even) td { background:var(--table-even); }
+  .yes { color:var(--teal); font-weight:700; }
+  .no  { color:var(--red);  font-weight:700; }
+
+  /* TIMELINE */
+  .timeline { position:relative; padding-left:1.8rem; margin-top:0.8rem; }
+  .timeline::before {
+    content:''; position:absolute; left:0.5rem; top:0; bottom:0;
+    width:2px; background:linear-gradient(to bottom,var(--blue),var(--teal));
+    border-radius:1px;
+  }
+  .tl-item { position:relative; margin-bottom:1rem; }
+  .tl-dot {
+    position:absolute; left:-1.55rem; top:0.4rem;
+    width:10px; height:10px; border-radius:50%;
+    background:var(--gold); border:2px solid var(--bg);
+    box-shadow:0 0 8px var(--gold);
+  }
+  .tl-year { font-size:0.72rem; font-weight:700; color:var(--gold); letter-spacing:0.06em; }
+  .tl-text { font-size:0.88rem; color:var(--text-sub); line-height:1.65; }
+
+  /* GEN TABLE COLORS */
+  .gen1 td:first-child { border-left:3px solid #f85149; }
+  .gen2 td:first-child { border-left:3px solid #f0c060; }
+  .gen3 td:first-child { border-left:3px solid #39d2a6; }
+  .gen4 td:first-child { border-left:3px solid #bc8cff; }
+  .gen5 td:first-child { border-left:3px solid #58a6ff; }
+
+  /* FLASHCARDS */
+  .flashcard-area { margin-top:1.5rem; }
+  .fc-progress { text-align:center; font-size:0.82rem; color:var(--text-muted); margin-bottom:0.8rem; }
+  .fc-bar-wrap { height:4px; background:var(--border); border-radius:2px; margin-bottom:1.2rem; max-width:600px; margin-left:auto; margin-right:auto; }
+  .fc-bar { height:4px; background:var(--blue); border-radius:2px; transition:width 0.4s ease; }
+
+  .fc-scene { perspective:1200px; margin:0 auto; max-width:600px; }
+  .flashcard {
+    background:transparent; border-radius:18px; min-height:240px;
+    cursor:pointer; position:relative;
+    transform-style:preserve-3d;
+    transition:transform 0.55s cubic-bezier(0.22,1,0.36,1);
+    box-shadow:0 8px 40px rgba(0,0,0,0.4);
+  }
+  .flashcard.flipped { transform:rotateY(180deg); }
+
+  .fc-face {
+    position:absolute; inset:0; backface-visibility:hidden;
+    border-radius:18px; display:flex; flex-direction:column;
+    align-items:center; justify-content:center;
+    padding:2rem; text-align:center; border:1.5px solid var(--border);
+  }
+  .fc-front { background:var(--card); border-color:rgba(88,166,255,0.3); }
+  .fc-back  { background:linear-gradient(135deg,#0d2040 0%,#0a3030 100%); border-color:rgba(57,210,166,0.3); transform:rotateY(180deg); }
+
+  .fc-label {
+    position:absolute; top:0.9rem; left:1.1rem;
+    font-size:0.67rem; font-weight:700; letter-spacing:0.1em; text-transform:uppercase;
+  }
+  .fc-front .fc-label { color:var(--blue); }
+  .fc-back  .fc-label { color:var(--teal); }
+
+  .fc-module-tag {
+    position:absolute; top:0.9rem; right:1.1rem;
+    font-size:0.62rem; font-weight:700; letter-spacing:0.08em;
+    text-transform:uppercase; padding:0.15rem 0.5rem; border-radius:10px;
+  }
+  .fc-mod1 { background:var(--blue-dim); color:var(--blue); }
+  .fc-mod2 { background:var(--gold-dim); color:var(--gold); }
+  .fc-mod3 { background:var(--teal-dim); color:var(--teal); }
+
+  .fc-question {
+    font-family:'Playfair Display',serif;
+    font-size:clamp(1rem,2.5vw,1.2rem); color:var(--text); line-height:1.5;
+  }
+  .fc-answer {
+    font-size:0.91rem; color:#c9fbe9; line-height:1.78; white-space:pre-line;
+  }
+  .fc-hint { font-size:0.73rem; color:var(--text-muted); margin-top:1.2rem; }
+
+  .fc-controls { display:flex; gap:0.8rem; justify-content:center; margin-top:1.4rem; flex-wrap:wrap; }
+
+  /* BUTTONS */
+  .btn {
+    padding:0.6rem 1.4rem; border-radius:10px; border:none;
+    cursor:pointer; font-family:'DM Sans',sans-serif;
+    font-weight:600; font-size:0.88rem; transition:all 0.18s;
+  }
+  .btn-primary { background:#2a3a6e; color:#fff; }
+  .btn-primary:hover { background:#3a4e8e; transform:translateY(-1px); }
+  .btn-gold { background:var(--gold); color:#0d1117; }
+  .btn-gold:hover { filter:brightness(1.1); transform:translateY(-1px); }
+  .btn-outline { background:transparent; border:1.5px solid var(--text-muted); color:var(--text); }
+  .btn-outline:hover { border-color:var(--gold); color:var(--gold); transform:translateY(-1px); }
+  .btn-blue { background:var(--blue); color:#0d1117; }
+  .btn-blue:hover { filter:brightness(1.1); transform:translateY(-1px); }
+
+  /* QUIZ */
+  .quiz-intro { text-align:center; padding:3rem 1rem; }
+  .quiz-intro h2 { font-family:'Playfair Display',serif; font-size:1.8rem; margin-bottom:0.7rem; }
+  .quiz-intro p { color:var(--text-muted); margin-bottom:1.8rem; }
+
+  .quiz-q {
+    background:var(--card); border-radius:14px;
+    padding:1.4rem 1.4rem 1rem;
+    box-shadow:0 2px 16px rgba(0,0,0,0.25);
+    margin-bottom:1.4rem; border:1px solid var(--border);
+    animation:cardIn 0.35s ease both;
+  }
+  .quiz-q-text { font-weight:600; font-size:0.95rem; margin-bottom:1rem; line-height:1.55; color:var(--text); }
+  .quiz-mod-tag {
+    display:inline-block; font-size:0.62rem; font-weight:700;
+    letter-spacing:0.07em; text-transform:uppercase;
+    padding:0.15rem 0.5rem; border-radius:10px; margin-bottom:0.6rem;
+  }
+
+  .quiz-opt {
+    display:block; padding:0.65rem 0.95rem; border-radius:9px;
+    cursor:pointer; margin-bottom:0.45rem;
+    border:1.5px solid var(--border); font-size:0.88rem;
+    background:transparent; width:100%; text-align:left;
+    font-family:'DM Sans',sans-serif; color:var(--text-sub);
+    transition:all 0.15s;
+  }
+  .quiz-opt:hover { background:var(--gold-dim); border-color:var(--gold); color:var(--text); }
+  .quiz-opt.correct { background:var(--teal-dim); border-color:var(--teal); color:var(--teal); font-weight:600; pointer-events:none; }
+  .quiz-opt.wrong   { background:var(--red-dim);  border-color:var(--red);  color:var(--red);  pointer-events:none; }
+  .quiz-opt.disabled{ pointer-events:none; opacity:0.5; }
+  .quiz-feedback { font-size:0.85rem; margin-top:0.7rem; padding:0.55rem 0.9rem; border-radius:8px; line-height:1.5; }
+  .quiz-feedback.ok  { background:var(--teal-dim); color:var(--teal); }
+  .quiz-feedback.bad { background:var(--red-dim);  color:var(--red); }
+
+  .quiz-score {
+    text-align:center;
+    background:linear-gradient(135deg,#0a1830 0%,#0a2a20 100%);
+    color:#fff; border-radius:18px; padding:2.5rem; margin-top:1rem;
+    border:1px solid rgba(88,166,255,0.2);
+    animation:popIn 0.4s cubic-bezier(0.22,1,0.36,1) both;
+  }
+  @keyframes popIn {
+    from{opacity:0;transform:scale(0.9);}
+    to{opacity:1;transform:scale(1);}
+  }
+  .quiz-score h2 { font-family:'Playfair Display',serif; font-size:2rem; }
+  .quiz-score p  { color:rgba(255,255,255,0.7); margin-top:0.5rem; }
+  .big-score { font-size:3.5rem; font-weight:900; color:var(--gold); display:block; margin:0.6rem 0; }
+
+  /* RIPPLE */
+  .ripple {
+    position:absolute; border-radius:50%;
+    transform:scale(0); animation:rippleAnim 0.5s linear;
+    background:rgba(88,166,255,0.2); pointer-events:none;
+  }
+  @keyframes rippleAnim { to{transform:scale(4);opacity:0;} }
+
+  /* INFO BOX */
+  .info-box {
+    background:var(--blue-dim); border:1px solid rgba(88,166,255,0.25);
+    border-radius:10px; padding:0.9rem 1rem; margin-top:0.8rem;
+    font-size:0.88rem; color:var(--text-sub); line-height:1.7;
+  }
+  .info-box strong { color:var(--blue); }
+</style>
+</head>
+<body>
+
+<div id="particles"></div>
+
+<header>
+  <div class="header-glow"></div>
+  <button class="theme-toggle" onclick="toggleTheme()" id="themeBtn">☀ Light</button>
+  <div class="badge-row">
+    <span class="badge badge-m1">Module 1 · ICT Intro</span>
+    <span class="badge badge-m2">Module 2 · History of Computers</span>
+    <span class="badge badge-m3">Module 3 · Web & Internet</span>
+  </div>
+  <h1>ICT Study Guide</h1>
+  <p>Living in the IT Era · Complete Reviewer</p>
+  <div class="tabs">
+    <button class="tab-btn active" onclick="switchTab('notes',event)">📖 Notes</button>
+    <button class="tab-btn" onclick="switchTab('flashcards',event)">🃏 Flashcards</button>
+    <button class="tab-btn" onclick="switchTab('quiz',event)">✏️ Quiz</button>
+  </div>
+</header>
+
+<main>
+
+<!-- ===================== NOTES TAB ===================== -->
+<div id="tab-notes" class="tab-content active">
+
+  <!-- ======== MODULE 1 ======== -->
+  <p class="section-label m1"><span class="lnum">MODULE 1</span> Introduction to Information & Communication Technology</p>
+
+  <div class="card" onclick="toggleCard(this,event)">
+    <div class="card-header">
+      <span class="card-title">What is ICT?</span>
+      <span class="tag tag-def">Definition</span>
+      <span class="chevron">▼</span>
+    </div>
+    <div class="card-body">
+      <p><span class="highlight">ICT (Information and Communications Technology)</span> is the infrastructure and components that enable modern computing.</p>
+      <p>It generally means all <strong>devices, networking components, applications, and systems</strong> that combined allow people and organizations (businesses, nonprofits, governments) to interact in the digital world.</p>
+      <p>Technology has always been a means of communication and it continues to reshape our world — encouraging new habits, new ways to work together, and new opportunities across every industry.</p>
+    </div>
+  </div>
+
+  <div class="card" onclick="toggleCard(this,event)">
+    <div class="card-header">
+      <span class="card-title">Uses of ICT in Our Daily Lives (4 Main Areas)</span>
+      <span class="tag tag-types">Types</span>
+      <span class="chevron">▼</span>
+    </div>
+    <div class="card-body">
+      <ul>
+        <li><span class="highlight">Communication</span> – Enables chatting, email, voice mail, and social networking. ICT allows communication even across great distances at the cheapest cost.</li>
+        <li><span class="highlight">Job Opportunities</span> – ICT enables organizations to operate more efficiently. Employers now expect basic ICT skills. Jobs can be searched online using smartphones, laptops, etc.</li>
+        <li><span class="highlight">Education</span> – Supports audio-visual packages, interactive exercises, remote learning, and flipped classrooms. Teachers who are digitally literate develop students' higher-order thinking skills.</li>
+        <li><span class="highlight">Socializing</span> – Social media changed how people find partners, access news, and organize for change. Platforms like Facebook, Twitter, YouTube, and LinkedIn help people share interests globally.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="card" onclick="toggleCard(this,event)">
+    <div class="card-header">
+      <span class="card-title">Positive Impacts of ICT on Society</span>
+      <span class="tag tag-key">Key Concept</span>
+      <span class="chevron">▼</span>
+    </div>
+    <div class="card-body">
+      <ul>
+        <li><span class="highlight">Access to Information</span> – Better and cheaper communications (VoIP, Instant Messaging); access to worldwide information.</li>
+        <li><span class="highlight">Improved Education</span> – Distance learning, online tutorials, interactive multimedia, virtual reality.</li>
+        <li><span class="highlight">New Tools & Opportunities</span> – Digital cameras, photo editing, screen readers for visually impaired people.</li>
+        <li><span class="highlight">Communication Cost Savings</span> – VoIP instead of phones, email instead of post, video conferencing instead of travel.</li>
+        <li><span class="highlight">Information Management</span> – Data mining for targeted advertising; improved stock control and cash flow.</li>
+        <li><span class="highlight">Security</span> – Encryption keeps data safe from unauthorized access.</li>
+        <li><span class="highlight">Global Participation</span> – ICT allows people to participate in a wider, worldwide society.</li>
+        <li><span class="highlight">New Jobs Created</span> – Systems analysts, programmers, software engineers, help desk operators, trainers.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="card" onclick="toggleCard(this,event)">
+    <div class="card-header">
+      <span class="card-title">Negative Impacts of ICT on Society</span>
+      <span class="tag tag-key">Key Concept</span>
+      <span class="chevron">▼</span>
+    </div>
+    <div class="card-body">
+      <ul>
+        <li><span class="highlight">Job Loss</span> – Automation replaces manual operations (e.g., robots on assembly lines). Job export to countries with lower operating costs. Fewer workers needed to do the same amount of work.</li>
+        <li><span class="highlight">Reduced Personal Interaction</span> – People may feel isolated and unhappy without face-to-face contact.</li>
+        <li><span class="highlight">Reduced Physical Activity</span> – Can lead to obesity, heart disease, and diabetes.</li>
+        <li><span class="highlight">High Cost</span> – Hardware and software are expensive to purchase and maintain; requires specialist staff.</li>
+        <li><span class="highlight">Competition</span> – Organizations may lose to others that offer the same service for less money on a national or international scale.</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- ======== MODULE 2 ======== -->
+  <p class="section-label m2"><span class="lnum">MODULE 2</span> History of Computer: Basic Computing Periods</p>
+
+  <div class="card" onclick="toggleCard(this,event)">
+    <div class="card-header">
+      <span class="card-title">Definition of Computer & 3 Principal Characteristics</span>
+      <span class="tag tag-def">Definition</span>
+      <span class="chevron">▼</span>
+    </div>
+    <div class="card-body">
+      <p>A <span class="highlight">computer</span> is a programmable machine — an electronic device that manipulates information/data with the ability to store, retrieve, and process data. It is any device that aids humans in performing computations or calculations.</p>
+      <p style="margin-top:0.6rem"><strong>Three Principal Characteristics:</strong></p>
+      <ul>
+        <li>Responds to a specific set of instructions in a well-defined manner.</li>
+        <li>Can execute a pre-recorded list of instructions.</li>
+        <li>Can quickly store and retrieve large amounts of data.</li>
+      </ul>
+      <div class="info-box"><strong>Note:</strong> The first use of the word "computer" was recorded in <strong>1613</strong>, referring to a <em>person</em> who carried out calculations — not a machine.</div>
+    </div>
+  </div>
+
+  <div class="card" onclick="toggleCard(this,event)">
+    <div class="card-header">
+      <span class="card-title">Applications of ICT / Computers in Daily Life (20 Areas)</span>
+      <span class="tag tag-types">Types</span>
+      <span class="chevron">▼</span>
+    </div>
+    <div class="card-body">
+      <table class="compare-table">
+        <tr><th>#</th><th>Application</th><th>Key Use</th></tr>
+        <tr><td>1</td><td><strong>Business</strong></td><td>Accounts, personnel records, inventory, presentations, e-mail, customer interaction</td></tr>
+        <tr><td>2</td><td><strong>Education</strong></td><td>Audio-visual packages, online exams, remote learning, student performance monitoring</td></tr>
+        <tr><td>3</td><td><strong>Healthcare</strong></td><td>Digitized patient records, lab equipment control, drug info access, disease sharing</td></tr>
+        <tr><td>4</td><td><strong>Retail & Trade</strong></td><td>Buy/sell online, compare prices, eBay, Craigslist, social media listings</td></tr>
+        <tr><td>5</td><td><strong>Government</strong></td><td>City planning, law enforcement, traffic, tourism, internal/external communication</td></tr>
+        <tr><td>6</td><td><strong>Marketing</strong></td><td>Precise campaigns, social media, email/chat with customers, website creation</td></tr>
+        <tr><td>7</td><td><strong>Science</strong></td><td>Research, data collection & analysis, spacecraft control, international collaboration</td></tr>
+        <tr><td>8</td><td><strong>Publishing</strong></td><td>Design newsletters, magazines, novels; hard-copy & e-books; track sales</td></tr>
+        <tr><td>9</td><td><strong>Arts & Entertainment</strong></td><td>Drawings, photo editing, music recording, video editing, games</td></tr>
+        <tr><td>10</td><td><strong>Communication</strong></td><td>Skype, video calls, microphones & webcams built-in, real-time global connection</td></tr>
+        <tr><td>11</td><td><strong>Banking & Finance</strong></td><td>Online banking, stock trading, investment management, customer behavior data</td></tr>
+        <tr><td>12</td><td><strong>Transport</strong></td><td>Automated safety/navigation, self-driving systems, vehicle maintenance alerts</td></tr>
+        <tr><td>13</td><td><strong>Navigation</strong></td><td>GPS + computers for exact location tracking, points of interest nearby</td></tr>
+        <tr><td>14</td><td><strong>Work from Home</strong></td><td>Remote access to data, communication, productivity monitoring</td></tr>
+        <tr><td>15</td><td><strong>Military</strong></td><td>Training, intelligence analysis, guided missiles, drones, geospatial data</td></tr>
+        <tr><td>16</td><td><strong>Social & Romance</strong></td><td>Social media, dating apps, online forums, blogs, photo/video sharing</td></tr>
+        <tr><td>17</td><td><strong>Booking Vacations</strong></td><td>Timetables, route options, hotel/AirBnB booking, guided tours</td></tr>
+        <tr><td>18</td><td><strong>Security & Surveillance</strong></td><td>Biometric passports, face recognition, license plate scanning</td></tr>
+        <tr><td>19</td><td><strong>Weather Forecasting</strong></td><td>Processing large meteorological data from satellites for weather prediction</td></tr>
+        <tr><td>20</td><td><strong>Robotics</strong></td><td>Manufacturing, hazardous exploration, law enforcement, healthcare assistance</td></tr>
+      </table>
+    </div>
+  </div>
+
+  <div class="card" onclick="toggleCard(this,event)">
+    <div class="card-header">
+      <span class="card-title">Early Computing Devices (Timeline)</span>
+      <span class="tag tag-hist">History</span>
+      <span class="chevron">▼</span>
+    </div>
+    <div class="card-body">
+      <div class="timeline">
+        <div class="tl-item"><div class="tl-dot"></div><div class="tl-year">2400 B.C.</div><div class="tl-text"><strong>Abacus</strong> – Invented in Babylonia; used for basic arithmetic. Familiar Chinese form used around 500 B.C.</div></div>
+        <div class="tl-item"><div class="tl-dot"></div><div class="tl-year">1614</div><div class="tl-text"><strong>Napier's Bones</strong> – Invented by John Napier; rods for multiplication, division, roots.</div></div>
+        <div class="tl-item"><div class="tl-dot"></div><div class="tl-year">1622</div><div class="tl-text"><strong>Slide Rule</strong> – Invented by William Oughtred; based on Napier's logarithms; used for multiplication, division, trigonometry.</div></div>
+        <div class="tl-item"><div class="tl-dot"></div><div class="tl-year">1642</div><div class="tl-text"><strong>Pascaline</strong> – Invented by Blaise Pascal; limited to addition and subtraction; too expensive.</div></div>
+        <div class="tl-item"><div class="tl-dot"></div><div class="tl-year">1672</div><div class="tl-text"><strong>Stepped Reckoner</strong> – Invented by Gottfried Wilhelm Leibniz; could add, subtract, multiply, and divide automatically.</div></div>
+        <div class="tl-item"><div class="tl-dot"></div><div class="tl-year">1820</div><div class="tl-text"><strong>Arithmometer</strong> – Invented by Thomas de Colmar; first reliable, commercially successful, mass-produced calculating machine.</div></div>
+        <div class="tl-item"><div class="tl-dot"></div><div class="tl-year">1822 & 1834</div><div class="tl-text"><strong>Difference Engine & Analytical Engine</strong> – Charles Babbage; first mechanical computer; designed to tabulate polynomial functions.</div></div>
+        <div class="tl-item"><div class="tl-dot"></div><div class="tl-year">1840</div><div class="tl-text"><strong>First Computer Programmer</strong> – Augusta Ada Byron suggested binary system to Babbage and wrote programs for the Analytical Engine.</div></div>
+        <div class="tl-item"><div class="tl-dot"></div><div class="tl-year">1843</div><div class="tl-text"><strong>Scheutzian Calculation Engine</strong> – Per Georg Scheutz; based on Babbage's engine; the first printing calculator.</div></div>
+        <div class="tl-item"><div class="tl-dot"></div><div class="tl-year">1881</div><div class="tl-text"><strong>Jacquard Loom</strong> – Joseph-Marie Jacquard; mechanical loom controlled by punched cards.</div></div>
+        <div class="tl-item"><div class="tl-dot"></div><div class="tl-year">1890</div><div class="tl-text"><strong>Tabulating Machine</strong> – Herman Hollerith; used to summarize information and accounting.</div></div>
+        <div class="tl-item"><div class="tl-dot"></div><div class="tl-year">1936–1938</div><div class="tl-text"><strong>Z1</strong> – Konrad Zuse; first programmable computer; used punch tape for input/output.</div></div>
+        <div class="tl-item"><div class="tl-dot"></div><div class="tl-year">1939–1942</div><div class="tl-text"><strong>Atanasoff-Berry Computer (ABC)</strong> – John Atanasoff & Clifford Berry at Iowa State University; first electronic digital computing device.</div></div>
+        <div class="tl-item"><div class="tl-dot"></div><div class="tl-year">1943</div><div class="tl-text"><strong>Harvard Mark 1 (IBM ASCC)</strong> – Howard H. Aiken; first electro-mechanical computer; 8ft high, 50ft long, 5 tons.</div></div>
+        <div class="tl-item"><div class="tl-dot"></div><div class="tl-year">1946</div><div class="tl-text"><strong>ENIAC</strong> – John Presper Eckert & John Mauchly; first electronic general-purpose computer; 680 sq ft, 30 tons; used vacuum tubes.</div></div>
+        <div class="tl-item"><div class="tl-dot"></div><div class="tl-year">1949</div><div class="tl-text"><strong>First Computer Company</strong> – Electronic Controls Company, founded by Eckert and Mauchly.</div></div>
+        <div class="tl-item"><div class="tl-dot"></div><div class="tl-year">1981</div><div class="tl-text"><strong>First Portable Computer</strong> – Osborne 1, released by the Osborne Computer Corporation.</div></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card" onclick="toggleCard(this,event)">
+    <div class="card-header">
+      <span class="card-title">Basic Computing Periods – 4 Ages</span>
+      <span class="tag tag-hist">History</span>
+      <span class="chevron">▼</span>
+    </div>
+    <div class="card-body">
+      <table class="compare-table">
+        <tr><th>Age</th><th>Period</th><th>Key Developments</th></tr>
+        <tr><td><strong>Premechanical</strong></td><td>3000 B.C. – 1450 A.D.</td><td>Cave paintings (petroglyphs), Phoenician alphabet, papyrus paper, first books & libraries, first numbering systems (1–9 by India ~100 A.D.; zero by 875 A.D.), Abacus.</td></tr>
+        <tr><td><strong>Mechanical</strong></td><td>1450 – 1840</td><td>Slide Rule, Pascaline (Blaise Pascal), Difference Engine (Charles Babbage), first calculation machines; large but early ancestors of today's computers.</td></tr>
+        <tr><td><strong>Electromechanical</strong></td><td>1840 – 1940</td><td>Telegraph (early 1800s), Morse Code (Samuel Morse, 1835), Telephone (Alexander Graham Bell, 1876), Radio (Guglielmo Marconi, 1894), Harvard Mark 1 (1940) — 8ft high, 50ft long, 5 tons.</td></tr>
+        <tr><td><strong>Electronic</strong></td><td>1940 – Present</td><td>ENIAC (1946), vacuum tubes → transistors → integrated circuits → microprocessors → AI. Personal computers (Apple II), GUI developed.</td></tr>
+      </table>
+    </div>
+  </div>
+
+  <div class="card" onclick="toggleCard(this,event)">
+    <div class="card-header">
+      <span class="card-title">5 Generations of Computers</span>
+      <span class="tag tag-key">Key Concept</span>
+      <span class="chevron">▼</span>
+    </div>
+    <div class="card-body">
+      <table class="compare-table">
+        <tr><th>Generation</th><th>Period</th><th>Technology</th><th>Key Features</th><th>Examples</th></tr>
+        <tr class="gen1"><td><strong>1st</strong></td><td>1946–1958</td><td>Vacuum Tubes + Magnetic Drums</td><td>Enormous rooms; very expensive; machine language; punch cards/paper tape input; printout output</td><td>ENIAC, EDSAC, UNIVAC I/II</td></tr>
+        <tr class="gen2"><td><strong>2nd</strong></td><td>1959–1964</td><td>Transistors</td><td>1 transistor = 40 vacuum tubes; smaller, faster, cheaper; symbolic/assembly language; magnetic core memory; still heat issues</td><td>UNIVAC III, IBM 7030, IBM 7070/7090</td></tr>
+        <tr class="gen3"><td><strong>3rd</strong></td><td>1965–1970</td><td>Integrated Circuits (ICs)</td><td>Transistors miniaturized onto silicon chips (semiconductors); billions of operations per second; much smaller & cheaper; OS appears; BASIC language</td><td>IBM 360 series</td></tr>
+        <tr class="gen4"><td><strong>4th</strong></td><td>1971–Today</td><td>Microprocessors</td><td>Thousands of ICs on one chip; led to internet; GUI, mouse, handheld devices; personal computers (Apple II)</td><td>Apple II, modern PCs</td></tr>
+        <tr class="gen5"><td><strong>5th</strong></td><td>Today–Future</td><td>Artificial Intelligence (AI)</td><td>Parallel processing, superconductors; responds to natural language; capable of learning & self-organization; voice recognition</td><td>AI assistants, smart devices</td></tr>
+      </table>
+    </div>
+  </div>
+
+  <!-- ======== MODULE 3 ======== -->
+  <p class="section-label m3"><span class="lnum">MODULE 3</span> The Web and the Internet</p>
+
+  <div class="card" onclick="toggleCard(this,event)">
+    <div class="card-header">
+      <span class="card-title">The World Wide Web – Overview & Inventor</span>
+      <span class="tag tag-def">Definition</span>
+      <span class="chevron">▼</span>
+    </div>
+    <div class="card-body">
+      <p>The <span class="highlight">World Wide Web (WWW)</span> consists of information organized into Web pages containing text and graphic images. It is a larger collection of interconnected documents/content that uses hypertext links (highlighted keywords and images) to lead to related information.</p>
+      <ul>
+        <li><span class="highlight">Web Site</span> – a collection of linked Web pages with a common theme or focus.</li>
+        <li><span class="highlight">Home Page</span> – the main page that all pages on a Web site link back to.</li>
+      </ul>
+      <div class="info-box"><strong>Inventor:</strong> <strong>Sir Timothy John Berners-Lee (TimBL)</strong> — English engineer and computer scientist. Professorial Fellow at the University of Oxford and professor at MIT.</div>
+    </div>
+  </div>
+
+  <div class="card" onclick="toggleCard(this,event)">
+    <div class="card-header">
+      <span class="card-title">Web 1.0 vs Web 2.0 vs Web 3.0</span>
+      <span class="tag tag-key">Key Concept</span>
+      <span class="chevron">▼</span>
+    </div>
+    <div class="card-body">
+      <table class="compare-table">
+        <tr><th>Version</th><th>Name</th><th>Description</th><th>Examples</th></tr>
+        <tr><td><strong>Web 1.0</strong></td><td>Read-Only Static Web</td><td>Old internet; users can only read. Focused on company homepages. Used as "Information Portal". Used tables for layout. Disadvantages: read only, limited interaction, lack of standards.</td><td>Mp3.com, HTML portals, Page Views, Directories</td></tr>
+        <tr><td><strong>Web 2.0</strong></td><td>Read-Write Interactive Web</td><td>User-generated content. Dynamic pages (user can comment/create accounts). Emphasis on human collaboration. Platform that gives users control of their data. Social media, blogs, wikis.</td><td>Facebook, Twitter, WordPress, Wikipedia, YouTube</td></tr>
+        <tr><td><strong>Web 3.0</strong></td><td>Read-Write Intelligent Web</td><td>Name suggested by John Markoff (NY Times). More connected, open, and intelligent. Uses semantic web, distributed databases, natural language processing, machine learning, AI agents. Web of data — system readable rather than human readable.</td><td>AI-powered sites, semantic search</td></tr>
+      </table>
+    </div>
+  </div>
+
+  <div class="card" onclick="toggleCard(this,event)">
+    <div class="card-header">
+      <span class="card-title">Key Features of Web 2.0</span>
+      <span class="tag tag-types">Types</span>
+      <span class="chevron">▼</span>
+    </div>
+    <div class="card-body">
+      <ul>
+        <li><span class="highlight">Folksonomy</span> – Allows users to categorize/arrange information using freely chosen keywords (e.g., tagging).</li>
+        <li><span class="highlight">Rich User Interface</span> – Content is dynamic and responsive to user input (e.g., site that shows local content).</li>
+        <li><span class="highlight">User Participation</span> – Not just the website owner puts content; others add through comments, reviews, and evaluation.</li>
+        <li><span class="highlight">Long Tail</span> – Services offered on demand rather than one-time purchase. Like subscribing to a data plan charged by usage or bandwidth.</li>
+      </ul>
+      <p style="margin-top:0.7rem"><strong>Web 2.0 Examples:</strong></p>
+      <ul>
+        <li><span class="highlight">Social Networking</span> – Facebook, Twitter, LinkedIn, Google+, Pinterest, Tumblr, Instagram</li>
+        <li><span class="highlight">Blogs</span> – WordPress, Blogger, Tumblr (posts in reverse chronological order)</li>
+        <li><span class="highlight">Wikis</span> – Wikipedia, Wikibooks, Wikiversity, Wikidata, Wikinews, Wikispecies, MediaWiki, Wikiquote</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="card" onclick="toggleCard(this,event)">
+    <div class="card-header">
+      <span class="card-title">Types of Websites (11 Types)</span>
+      <span class="tag tag-types">Types</span>
+      <span class="chevron">▼</span>
+    </div>
+    <div class="card-body">
+      <table class="compare-table">
+        <tr><th>Type</th><th>Description</th></tr>
+        <tr><td><strong>eCommerce</strong></td><td>People can directly buy products; includes shopping cart and payment processing</td></tr>
+        <tr><td><strong>Business</strong></td><td>Represents a specific business with branding, products, and services info</td></tr>
+        <tr><td><strong>Entertainment</strong></td><td>Visited purely for entertainment purposes</td></tr>
+        <tr><td><strong>Portfolio</strong></td><td>Shows examples of past work for service providers to attract clients</td></tr>
+        <tr><td><strong>Media</strong></td><td>Collects news stories or reporting; may include entertainment but more news-focused</td></tr>
+        <tr><td><strong>Brochure</strong></td><td>Simplified business site; just a few pages of basic info and contact details</td></tr>
+        <tr><td><strong>Nonprofit</strong></td><td>Online presence for nonprofits; enables donations and shares organization info</td></tr>
+        <tr><td><strong>Educational</strong></td><td>Educational institutions or online course providers; primary goal is education</td></tr>
+        <tr><td><strong>Infopreneur</strong></td><td>Creates and sells information products: courses, tutorials, videos, eBooks</td></tr>
+        <tr><td><strong>Personal</strong></td><td>Personal blogs, vlogs, photo diaries; not necessarily monetized</td></tr>
+        <tr><td><strong>Web Portal / Wiki</strong></td><td>Web portals: internal info aggregators with login. Wikis: collaborative content editing (e.g., Wikipedia)</td></tr>
+      </table>
+    </div>
+  </div>
+
+  <div class="card" onclick="toggleCard(this,event)">
+    <div class="card-header">
+      <span class="card-title">The Internet – Definition, History & Fathers</span>
+      <span class="tag tag-hist">History</span>
+      <span class="chevron">▼</span>
+    </div>
+    <div class="card-body">
+      <p>The <span class="highlight">Internet ("net" = network of networks)</span> is the largest computer network in the world that connects billions of users. The word comes from <em>interconnection</em> + <em>network</em>. Generally, <strong>nobody owns the internet</strong>.</p>
+      <div class="timeline" style="margin-top:0.8rem">
+        <div class="tl-item"><div class="tl-dot"></div><div class="tl-year">Jan 2, 1969</div><div class="tl-text"><strong>ARPA (Advanced Research Project Agency)</strong> started an experimental computer network. No central server — every computer had equal importance. If one or two nodes were destroyed, the network still worked.</div></div>
+        <div class="tl-item"><div class="tl-dot"></div><div class="tl-year">1982</div><div class="tl-text">The word <strong>"Internet"</strong> officially started being used.</div></div>
+        <div class="tl-item"><div class="tl-dot"></div><div class="tl-year">1986</div><div class="tl-text">First <strong>"Free Net"</strong> created at Case Western Reserve University.</div></div>
+        <div class="tl-item"><div class="tl-dot"></div><div class="tl-year">1991</div><div class="tl-text">US government allowed <strong>business agencies to connect</strong> to the internet.</div></div>
+      </div>
+      <div class="info-box" style="margin-top:0.8rem"><strong>Father of the Internet:</strong> <strong>Vinton Gray Cerf</strong> — American Internet pioneer; co-developer of TCP/IP with Bob Kahn.</div>
+    </div>
+  </div>
+
+  <div class="card" onclick="toggleCard(this,event)">
+    <div class="card-header">
+      <span class="card-title">Major Components of the Internet</span>
+      <span class="tag tag-key">Key Concept</span>
+      <span class="chevron">▼</span>
+    </div>
+    <div class="card-body">
+      <p><strong>1. Servers</strong> – A computer program that provides service to another computer program and its user.</p>
+      <table class="compare-table" style="margin-top:0.6rem">
+        <tr><th>Server Type</th><th>Function</th></tr>
+        <tr><td><strong>Application Server</strong></td><td>Provides the business logic for an application program</td></tr>
+        <tr><td><strong>Web Server</strong></td><td>Serves requested HTML pages or files</td></tr>
+        <tr><td><strong>Proxy Server</strong></td><td>Acts as intermediary between endpoint device and another server</td></tr>
+        <tr><td><strong>Mail Server</strong></td><td>Receives incoming and forwards outgoing email</td></tr>
+        <tr><td><strong>File Server</strong></td><td>Central storage and management of data files for network access</td></tr>
+        <tr><td><strong>Policy Server</strong></td><td>Security component providing authorization, tracking, and file control</td></tr>
+      </table>
+      <p style="margin-top:0.8rem"><strong>2. IP Address (Internet Protocol)</strong> – A numerical label assigned to each device that provides identity to the network device.</p>
+      <p style="margin-top:0.5rem"><strong>3. Browser</strong> – An application program that provides a way to look up information on the web.</p>
+      <p style="margin-top:0.5rem"><strong>4. Domain Name System (DNS)</strong> – The "phonebook of the internet." We access information online through domain names.</p>
+      <table class="compare-table" style="margin-top:0.5rem">
+        <tr><th>Extension</th><th>Entity</th></tr>
+        <tr><td>.com</td><td>Commercial</td></tr>
+        <tr><td>.org</td><td>Organization</td></tr>
+        <tr><td>.net</td><td>Network</td></tr>
+        <tr><td>.edu</td><td>Education</td></tr>
+        <tr><td>.gov</td><td>National and State Government Agencies</td></tr>
+        <tr><td>.ph</td><td>Philippines</td></tr>
+        <tr><td>.au</td><td>Australia</td></tr>
+      </table>
+      <p style="margin-top:0.8rem"><strong>5. Internet Service Provider (ISP)</strong> – An organization that provides services for accessing, using, or participating in the internet.</p>
+      <ul>
+        <li><span class="highlight">National ISP</span> – Provides internet access nationwide.</li>
+        <li><span class="highlight">Regional ISP</span> – Provides internet access in cities and towns.</li>
+        <li>Examples: Sky Broadband, PLDT, Converge</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="card" onclick="toggleCard(this,event)">
+    <div class="card-header">
+      <span class="card-title">Uses of the Internet (12 Uses)</span>
+      <span class="tag tag-types">Types</span>
+      <span class="chevron">▼</span>
+    </div>
+    <div class="card-body">
+      <ul>
+        <li>Look for information</li>
+        <li>School works, jobs, and home purposes</li>
+        <li>Send and receive electronic mail</li>
+        <li>Video teleconferencing (video call, video chat)</li>
+        <li>Buy and sell products</li>
+        <li>Social networking</li>
+        <li>Watch &amp; post videos</li>
+        <li>Games</li>
+        <li>Take college courses</li>
+        <li>Monitor home while away</li>
+        <li>Financial transactions</li>
+        <li>Download music and movies</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="card" onclick="toggleCard(this,event)">
+    <div class="card-header">
+      <span class="card-title">Internet Terms & Definitions</span>
+      <span class="tag tag-def">Definition</span>
+      <span class="chevron">▼</span>
+    </div>
+    <div class="card-body">
+      <table class="compare-table">
+        <tr><th>Term</th><th>Definition</th></tr>
+        <tr><td><strong>Internet</strong></td><td>Global network of thousands of computer networks linked by data lines and wireless systems</td></tr>
+        <tr><td><strong>Web</strong></td><td>A collection of billions of webpages viewable with a web browser</td></tr>
+        <tr><td><strong>Email</strong></td><td>The most common method of sending and receiving messages online</td></tr>
+        <tr><td><strong>Social Media</strong></td><td>Websites and apps that allow people to share comments, photos, and videos</td></tr>
+        <tr><td><strong>HTML</strong></td><td>Hypertext Markup Language — coding language telling a browser how to display pictures, text, multimedia, and links</td></tr>
+        <tr><td><strong>URL</strong></td><td>Uniform Resource Locator — a web address to connect to a remote resource on the WWW</td></tr>
+        <tr><td><strong>Bit</strong></td><td>A single digit in the binary numbering system (base 2); e.g., 0 or 1</td></tr>
+        <tr><td><strong>Byte</strong></td><td>Generally consists of eight bits</td></tr>
+        <tr><td><strong>Upload</strong></td><td>Transfer data FROM your computer TO another computer</td></tr>
+        <tr><td><strong>Download</strong></td><td>Transfer data FROM another computer TO your computer</td></tr>
+        <tr><td><strong>HTTP</strong></td><td>Hypertext Transfer Protocol — data communication standard of web pages</td></tr>
+        <tr><td><strong>HTTPS</strong></td><td>Hypertext Transfer Protocol Secure — adds encryption layer to protect personal info and passwords</td></tr>
+        <tr><td><strong>Router</strong></td><td>Hardware device that acts as the "traffic cop" for network signals; can be wired or wireless</td></tr>
+        <tr><td><strong>Encryption</strong></td><td>Mathematical scrambling of data so it is hidden from eavesdroppers; uses complex math formulas</td></tr>
+        <tr><td><strong>Web Bot</strong></td><td>Programs/applets used on the internet that perform repetitive functions like posting messages or searching info</td></tr>
+        <tr><td><strong>Search Engine</strong></td><td>Specialized software (e.g., Google, Yahoo) that lets users search the web using keywords/phrases</td></tr>
+      </table>
+    </div>
+  </div>
+
+</div><!-- end notes -->
+
+<!-- ===================== FLASHCARDS TAB ===================== -->
+<div id="tab-flashcards" class="tab-content">
+  <div class="flashcard-area">
+    <p class="fc-progress" id="fc-counter">Card 1 of 30</p>
+    <div class="fc-bar-wrap"><div class="fc-bar" id="fc-bar" style="width:3.3%"></div></div>
+    <div class="fc-scene">
+      <div class="flashcard" id="flashcard" onclick="flipCard()">
+        <div class="fc-face fc-front">
+          <span class="fc-label">QUESTION</span>
+          <span class="fc-module-tag" id="fc-mod-tag"></span>
+          <div class="fc-question" id="fc-q"></div>
+          <p class="fc-hint">Tap to flip ↩</p>
+        </div>
+        <div class="fc-face fc-back">
+          <span class="fc-label">ANSWER</span>
+          <div class="fc-answer" id="fc-a"></div>
+        </div>
+      </div>
+    </div>
+    <div class="fc-controls">
+      <button class="btn btn-outline" onclick="fcNav(-1)">← Prev</button>
+      <button class="btn btn-gold" onclick="flipCard()">Flip</button>
+      <button class="btn btn-primary" onclick="fcNav(1)">Next →</button>
+    </div>
+  </div>
+</div>
+
+<!-- ===================== QUIZ TAB ===================== -->
+<div id="tab-quiz" class="tab-content">
+  <div class="quiz-intro" id="quiz-intro">
+    <h2>Test Yourself</h2>
+    <p>20 multiple-choice questions covering all three ICT modules.</p>
+    <button class="btn btn-blue" onclick="startQuiz()">Start Quiz →</button>
+  </div>
+  <div id="quiz-body" style="display:none"></div>
+</div>
+
+</main>
+
+<script>
+// PARTICLES
+(function(){
+  const c=document.getElementById('particles');
+  const cols=['#58a6ff','#f0c060','#39d2a6','#bc8cff','#f85149'];
+  for(let i=0;i<22;i++){
+    const p=document.createElement('div'); p.className='particle';
+    const s=Math.random()*5+2;
+    p.style.cssText=`width:${s}px;height:${s}px;left:${Math.random()*100}%;background:${cols[Math.floor(Math.random()*cols.length)]};animation-duration:${Math.random()*18+10}s;animation-delay:${Math.random()*12}s;`;
+    c.appendChild(p);
+  }
+})();
+
+// THEME
+function toggleTheme(){
+  const h=document.documentElement;
+  const d=h.getAttribute('data-theme')==='dark';
+  h.setAttribute('data-theme',d?'light':'dark');
+  document.getElementById('themeBtn').textContent=d?'🌙 Dark':'☀ Light';
+}
+
+// TABS
+function switchTab(name,event){
+  document.querySelectorAll('.tab-content').forEach(t=>t.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
+  document.getElementById('tab-'+name).classList.add('active');
+  event.target.classList.add('active');
+}
+
+// CARD TOGGLE + RIPPLE
+function toggleCard(el,event){
+  const hdr=el.querySelector('.card-header');
+  const rect=hdr.getBoundingClientRect();
+  const r=document.createElement('span'); r.className='ripple';
+  const sz=Math.max(rect.width,rect.height);
+  r.style.cssText=`width:${sz}px;height:${sz}px;left:${(event.clientX||rect.left+rect.width/2)-rect.left-sz/2}px;top:${(event.clientY||rect.top+rect.height/2)-rect.top-sz/2}px`;
+  hdr.appendChild(r);
+  setTimeout(()=>r.remove(),500);
+  el.classList.toggle('open');
+}
+
+// FLASHCARDS
+const flashcards=[
+  // MODULE 1
+  {m:'fc-mod1',q:'What does ICT stand for and what is it?',a:'ICT = Information and Communications Technology. It is the infrastructure and components that enable modern computing — all devices, networking components, apps, and systems that allow people and organizations to interact digitally.'},
+  {m:'fc-mod1',q:'Name the 4 main uses of ICT in daily life.',a:'1. Communication\n2. Job Opportunities\n3. Education\n4. Socializing'},
+  {m:'fc-mod1',q:'Name 5 positive impacts of ICT on society.',a:'1. Access to information\n2. Improved access to education\n3. New tools & opportunities\n4. Communication cost savings\n5. Security through encryption\n(Also: Information management, global participation, new jobs created)'},
+  {m:'fc-mod1',q:'Name 4 negative impacts of ICT on society.',a:'1. Job loss (automation, job export)\n2. Reduced personal interaction\n3. Reduced physical activity (obesity, heart disease)\n4. High cost of hardware/software\n(Also: increased competition for organizations)'},
+  {m:'fc-mod1',q:'How does ICT impact education?',a:'ICT allows audio-visual packages, interactive exercises, remote/distance learning, and flipped classrooms. Digitally literate teachers develop students\' higher-order thinking skills. Students from remote areas can access expert teachers and resources.'},
+  // MODULE 2
+  {m:'fc-mod2',q:'What are the 3 principal characteristics of a computer?',a:'1. Responds to a specific set of instructions in a well-defined manner.\n2. Can execute a pre-recorded list of instructions.\n3. Can quickly store and retrieve large amounts of data.'},
+  {m:'fc-mod2',q:'Who invented the Difference Engine & Analytical Engine? Why is it significant?',a:'Charles Babbage (1822 & 1834). It is considered the first mechanical computer — an automatic calculator designed to tabulate polynomial functions.'},
+  {m:'fc-mod2',q:'Who was the first computer programmer and what did they do?',a:'Augusta Ada Byron (1840). She suggested using the binary system to Babbage and wrote programs for the Analytical Engine.'},
+  {m:'fc-mod2',q:'What is ENIAC and why is it important?',a:'ENIAC = Electronic Numerical Integrator and Computer. It was the first electronic general-purpose computer (1946). Developed by John Presper Eckert and John Mauchly. It occupied 680 sq ft and weighed 30 tons.'},
+  {m:'fc-mod2',q:'Name the 4 Basic Computing Periods (Ages) and their time ranges.',a:'1. Premechanical: 3000 B.C. – 1450 A.D.\n2. Mechanical: 1450 – 1840\n3. Electromechanical: 1840 – 1940\n4. Electronic: 1940 – Present'},
+  {m:'fc-mod2',q:'What technology defines each of the 5 computer generations?',a:'1st: Vacuum Tubes (1946–1958)\n2nd: Transistors (1959–1964)\n3rd: Integrated Circuits (1965–1970)\n4th: Microprocessors (1971–Today)\n5th: Artificial Intelligence (Today–Future)'},
+  {m:'fc-mod2',q:'What was the key advantage of 2nd generation computers over 1st?',a:'Transistors replaced vacuum tubes. One transistor replaced the equivalent of 40 vacuum tubes — making computers smaller, faster, cheaper, and more reliable. Assembly language replaced machine language.'},
+  {m:'fc-mod2',q:'What is the first programmable computer and who made it?',a:'Z1 — created by Konrad Zuse in Germany from 1936 to 1938. It used punch tape for input and output.'},
+  {m:'fc-mod2',q:'What was the first computer company and who founded it?',a:'Electronic Controls Company, founded in 1949 by John Presper Eckert and John Mauchly.'},
+  {m:'fc-mod2',q:'What is the 5th generation of computers based on and what is its goal?',a:'Based on Artificial Intelligence (AI). Uses parallel processing and superconductors. Goal: develop devices that respond to natural language input and are capable of learning and self-organization.'},
+  // MODULE 3
+  {m:'fc-mod3',q:'Who invented the World Wide Web and what is his background?',a:'Sir Timothy John Berners-Lee (TimBL). English engineer and computer scientist. Professorial Fellow at the University of Oxford and professor at MIT.'},
+  {m:'fc-mod3',q:'Compare Web 1.0, 2.0, and 3.0.',a:'Web 1.0: Read-Only Static Web — information portal, users only read.\nWeb 2.0: Read-Write Interactive Web — user-generated content, social media, blogs, dynamic pages.\nWeb 3.0: Read-Write Intelligent Web — semantic web, AI, machine learning, web of data.'},
+  {m:'fc-mod3',q:'Name the 4 key features of Web 2.0.',a:'1. Folksonomy – user-created tags/keywords\n2. Rich User Interface – dynamic, responsive content\n3. User Participation – comments, reviews, evaluations\n4. Long Tail – on-demand services (like data plans)'},
+  {m:'fc-mod3',q:'What is the Internet and who is called the "Father of the Internet"?',a:'The Internet (network of networks) is the largest computer network connecting billions of users. Nobody owns it.\nFather of the Internet: Vinton Gray Cerf — co-developer of TCP/IP with Bob Kahn.'},
+  {m:'fc-mod3',q:'Name the 6 types of servers.',a:'1. Application Server\n2. Web Server\n3. Proxy Server\n4. Mail Server\n5. File Server\n6. Policy Server'},
+  {m:'fc-mod3',q:'What do these DNS extensions mean: .com .org .edu .gov .ph',a:'.com = Commercial\n.org = Organization\n.edu = Education\n.gov = National/State Government\n.ph = Philippines\n.net = Network\n.au = Australia'},
+  {m:'fc-mod3',q:'What is the difference between HTTP and HTTPS?',a:'HTTP (Hypertext Transfer Protocol) = standard data communication for web pages.\nHTTPS (Hypertext Transfer Protocol Secure) = adds a special layer of encryption to protect personal information and passwords.'},
+  {m:'fc-mod3',q:'What is the difference between Upload and Download?',a:'Upload = transfer data FROM your computer TO another computer.\nDownload = transfer data FROM another computer TO your computer.'},
+  {m:'fc-mod3',q:'What is ARPA and what did it start in 1969?',a:'ARPA = Advanced Research Project Agency. On January 2, 1969, it started an experimental computer network with no central server — every computer had equal importance. This eventually became the Internet.'},
+  {m:'fc-mod3',q:'What is a Search Engine? Give examples.',a:'Specialized software that lets web browser users search for information using keywords or phrases.\nExamples: Google, Yahoo'},
+  {m:'fc-mod3',q:'What is Encryption?',a:'The mathematical scrambling of data so it is hidden from eavesdroppers. Uses complex math formulas to turn private data into meaningless code that only trusted readers can unscramble.'},
+  {m:'fc-mod3',q:'What is a Web Portal and how does it differ from a Wiki?',a:'Web Portal: designed for internal purposes in organizations; collects info from different sources; involves login and personalized views.\nWiki: any website where multiple users can collaborate on and edit content (e.g., Wikipedia).'},
+  {m:'fc-mod3',q:'What are the disadvantages of Web 1.0?',a:'1. Read-only web\n2. Limited user interaction\n3. Lack of standards'},
+  {m:'fc-mod3',q:'What is a Bit and what is a Byte?',a:'Bit = a single digit in the binary numbering system (base 2); either 0 or 1.\nByte = generally consists of eight bits.'},
+  {m:'fc-mod3',q:'Name at least 6 uses of the Internet.',a:'1. Look for information\n2. Send/receive email\n3. Video teleconferencing\n4. Buy and sell products\n5. Social networking\n6. Watch & post videos\n7. Online gaming\n8. Financial transactions\n9. Distance learning'},
+];
+
+let fcIndex=0,fcFlipped=false;
+const modClasses={m1:'fc-mod1',m2:'fc-mod2',m3:'fc-mod3'};
+const modLabels={m1:'Module 1',m2:'Module 2',m3:'Module 3'};
+
+function renderCard(){
+  const c=flashcards[fcIndex];
+  document.getElementById('fc-q').textContent=c.q;
+  document.getElementById('fc-a').textContent=c.a;
+  document.getElementById('fc-counter').textContent=`Card ${fcIndex+1} of ${flashcards.length}`;
+  document.getElementById('fc-bar').style.width=((fcIndex+1)/flashcards.length*100)+'%';
+  const mt=document.getElementById('fc-mod-tag');
+  mt.className='fc-module-tag '+c.m;
+  mt.textContent=modLabels[c.m];
+  document.getElementById('flashcard').classList.remove('flipped');
+  fcFlipped=false;
+}
+function flipCard(){
+  const el=document.getElementById('flashcard');
+  fcFlipped=!fcFlipped;
+  el.classList.toggle('flipped',fcFlipped);
+}
+function fcNav(dir){
+  fcIndex=(fcIndex+dir+flashcards.length)%flashcards.length;
+  renderCard();
+}
+renderCard();
+
+// QUIZ
+const questions=[
+  // MOD 1
+  {mod:'fc-mod1',q:'What does ICT stand for?',opts:['Information Computer Technology','Information and Communications Technology','Integrated Communication Tools','Internet Computing Technology'],ans:1,exp:'ICT = Information and Communications Technology — the infrastructure enabling modern computing.'},
+  {mod:'fc-mod1',q:'Which of the following is a NEGATIVE impact of ICT?',opts:['Access to information','Improved education','Job loss due to automation','Communication cost savings'],ans:2,exp:'Job loss is a key negative impact — automation and robots replace manual workers.'},
+  {mod:'fc-mod1',q:'ICT allows students to access teaching materials from all over the world through:',opts:['Physical libraries','Distance learning','Local tutoring','Manual instruction'],ans:1,exp:'Distance learning is an ICT benefit — students access materials globally.'},
+  {mod:'fc-mod1',q:'Which of the following best describes "Folksonomy" in Web 2.0?',opts:['Government control of internet content','Users categorizing information using freely chosen keywords (tagging)','A type of web server','A read-only web feature'],ans:1,exp:'Folksonomy lets users tag and categorize content — a key Web 2.0 feature.'},
+  // MOD 2
+  {mod:'fc-mod2',q:'The first use of the word "computer" was recorded in:',opts:['1945','1822','1613','1840'],ans:2,exp:'The word "computer" was first recorded in 1613 — referring to a person, not a machine.'},
+  {mod:'fc-mod2',q:'Which device is considered the first mechanical computer?',opts:['Abacus','ENIAC','Analytical Engine (Charles Babbage)','Harvard Mark 1'],ans:2,exp:'Charles Babbage\'s Analytical Engine (1834) is considered the first mechanical computer.'},
+  {mod:'fc-mod2',q:'ENIAC stands for:',opts:['Electronic Numerical Integrator and Computer','Electronic Network for Information and Calculation','Enhanced Numeric Input and Computation','Electronic Node for Internet Access and Communication'],ans:0,exp:'ENIAC = Electronic Numerical Integrator and Computer — first electronic general-purpose computer (1946).'},
+  {mod:'fc-mod2',q:'Which generation of computers used transistors?',opts:['First Generation','Second Generation','Third Generation','Fourth Generation'],ans:1,exp:'Transistors defined the Second Generation (1959–1964); one transistor replaced 40 vacuum tubes.'},
+  {mod:'fc-mod2',q:'The Electromechanical Age spans from:',opts:['3000 B.C. – 1450 A.D.','1450 – 1840','1840 – 1940','1940 – Present'],ans:2,exp:'The Electromechanical Age is 1840–1940, featuring the telegraph, telephone, radio, and Harvard Mark 1.'},
+  {mod:'fc-mod2',q:'The 5th Generation of computers is based on:',opts:['Integrated Circuits','Vacuum Tubes','Artificial Intelligence','Microprocessors'],ans:2,exp:'The 5th Generation uses AI, parallel processing, and superconductors — still in development.'},
+  {mod:'fc-mod2',q:'Who was the first computer programmer?',opts:['Charles Babbage','Vinton Cerf','Augusta Ada Byron','Herman Hollerith'],ans:2,exp:'Augusta Ada Byron (1840) suggested the binary system and wrote programs for Babbage\'s Analytical Engine.'},
+  {mod:'fc-mod2',q:'The Osborne 1, released in 1981, was significant because it was:',opts:['The first supercomputer','The first personal computer','The first portable computer','The first networking computer'],ans:2,exp:'Osborne 1 (1981) by the Osborne Computer Corporation was the first portable computer.'},
+  // MOD 3
+  {mod:'fc-mod3',q:'Who invented the World Wide Web?',opts:['Vinton Cerf','Bill Gates','Sir Timothy John Berners-Lee','Steve Jobs'],ans:2,exp:'Sir Timothy John Berners-Lee (TimBL) invented the WWW. He is a professor at Oxford and MIT.'},
+  {mod:'fc-mod3',q:'Web 1.0 is described as:',opts:['Read-Write Interactive Web','Read-Write Intelligent Web','Read-Only Static Web','Dynamic User Web'],ans:2,exp:'Web 1.0 = Read-Only Static Web — users could only read content; it was an "information portal."'},
+  {mod:'fc-mod3',q:'Which of the following is an example of Web 2.0?',opts:['Mp3.com','HTML Portals','Wikipedia (wiki) and Facebook (social networking)','Semantic Web AI agents'],ans:2,exp:'Web 2.0 includes social networking (Facebook) and wikis (Wikipedia) — read-write interactive web.'},
+  {mod:'fc-mod3',q:'ARPA started an experimental computer network on:',opts:['January 2, 1969','March 5, 1972','July 4, 1986','November 12, 1991'],ans:0,exp:'ARPA started the experimental network on January 2, 1969 — the origin of the Internet.'},
+  {mod:'fc-mod3',q:'What does DNS stand for and what is it?',opts:['Digital Network System — a type of internet speed','Domain Name System — the phonebook of the internet','Data Navigation Software — a type of browser','Dynamic Node Server — manages IP addresses'],ans:1,exp:'DNS = Domain Name System — the "phonebook of the internet" that maps domain names to IP addresses.'},
+  {mod:'fc-mod3',q:'What is the difference between HTTP and HTTPS?',opts:['HTTP is faster; HTTPS is slower','HTTPS adds encryption to protect personal data; HTTP does not','HTTP is for images; HTTPS is for text','There is no difference'],ans:1,exp:'HTTPS adds a layer of encryption to hide personal info and passwords — HTTP does not have this.'},
+  {mod:'fc-mod3',q:'Which server acts as an intermediary between a user\'s computer and another server?',opts:['Web Server','Mail Server','File Server','Proxy Server'],ans:3,exp:'A Proxy Server acts as an intermediary between an endpoint device and another server.'},
+  {mod:'fc-mod3',q:'What is the Semantic Web associated with?',opts:['Web 1.0','Web 2.0','Web 3.0','ARPANET'],ans:2,exp:'The Semantic Web is a feature of Web 3.0 — it delivers web content targeting the user and makes the web machine-readable.'},
+];
+
+let quizAnswers=[],quizSubmitted=[];
+function startQuiz(){
+  document.getElementById('quiz-intro').style.display='none';
+  quizAnswers=new Array(questions.length).fill(null);
+  quizSubmitted=new Array(questions.length).fill(false);
+  renderQuiz();
+  document.getElementById('quiz-body').style.display='block';
+}
+function renderQuiz(){
+  const body=document.getElementById('quiz-body');
+  body.innerHTML='';
+  questions.forEach((q,qi)=>{
+    const div=document.createElement('div');
+    div.className='quiz-q';
+    div.style.animationDelay=(qi*0.04)+'s';
+    const modTag=document.createElement('span');
+    modTag.className='quiz-mod-tag '+q.mod;
+    const labels={m1:'Module 1 · ICT',m2:'Module 2 · History','fc-mod1':'Module 1 · ICT','fc-mod2':'Module 2 · History','fc-mod3':'Module 3 · Web & Internet'};
+    modTag.textContent=labels[q.mod]||q.mod;
+    div.appendChild(modTag);
+    const qt=document.createElement('div');
+    qt.className='quiz-q-text';
+    qt.textContent=`${qi+1}. ${q.q}`;
+    div.appendChild(qt);
+    q.opts.forEach((opt,oi)=>{
+      const btn=document.createElement('button');
+      btn.className='quiz-opt';
+      btn.textContent=opt;
+      btn.onclick=()=>answerQ(qi,oi);
+      div.appendChild(btn);
+    });
+    const fb=document.createElement('div');
+    fb.id=`fb-${qi}`;
+    div.appendChild(fb);
+    body.appendChild(div);
+  });
+  const sb=document.createElement('div');
+  sb.style.cssText='text-align:center;margin-top:1.5rem;';
+  sb.innerHTML=`<button class="btn btn-gold" onclick="showScore()">Submit All &amp; See Score</button>`;
+  body.appendChild(sb);
+}
+function answerQ(qi,oi){
+  if(quizSubmitted[qi]) return;
+  quizSubmitted[qi]=true; quizAnswers[qi]=oi;
+  const q=questions[qi];
+  const qDiv=document.querySelectorAll('.quiz-q')[qi];
+  qDiv.querySelectorAll('.quiz-opt').forEach((btn,idx)=>{
+    if(idx===q.ans) btn.classList.add('correct');
+    else if(idx===oi&&oi!==q.ans) btn.classList.add('wrong');
+    else btn.classList.add('disabled');
+  });
+  const fb=document.getElementById(`fb-${qi}`);
+  fb.className='quiz-feedback '+(oi===q.ans?'ok':'bad');
+  fb.textContent=(oi===q.ans?'✓ Correct! ':'✗ Incorrect. ')+q.exp;
+}
+function showScore(){
+  const correct=quizAnswers.filter((a,i)=>a===questions[i].ans).length;
+  const total=questions.length;
+  const pct=Math.round(correct/total*100);
+  const msg=pct>=85?"Outstanding! You mastered the material! 🎉":pct>=70?"Great work — review a few more topics.":pct>=50?"Good effort — keep reviewing! 💪":"Keep studying — you've got this! 📚";
+  const sd=document.createElement('div');
+  sd.className='quiz-score';
+  sd.innerHTML=`<h2>Quiz Complete!</h2><span class="big-score">${correct}/${total}</span><p>${pct}% · ${msg}</p><br><br><button class="btn btn-gold" onclick="restartQuiz()">Try Again</button>`;
+  document.getElementById('quiz-body').appendChild(sd);
+  sd.scrollIntoView({behavior:'smooth'});
+}
+function restartQuiz(){
+  document.getElementById('quiz-body').style.display='none';
+  document.getElementById('quiz-intro').style.display='block';
+}
+</script>
+</body>
+</html>
